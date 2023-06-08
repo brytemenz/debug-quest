@@ -1,0 +1,67 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #e5f7fd;
+  }
+
+  h1 {
+    font-size: 32px;
+    text-align: center;
+    color: #155799;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 18px;
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+  }
+
+  button {
+    font-size: 20px;
+    padding: 10px 20px;
+    background-color: #155799;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #0d3b5c;
+  }
+
+  /* Welcome Screen */
+  #welcome-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  /* Game Screen */
+  #game-screen {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  #game-canvas {
+    background: url('/asset/forest.jpg') no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* End Screen */
+  #end-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }

@@ -8,7 +8,12 @@
     <!-- Welcome Screen -->
     <div id="welcome-screen">
       <h1>Welcome to Debug Quest: Jungle Adventures</h1>
-      <p>Instructions: (I will add instructions here)</p>
+      <p>
+        Instructions: Solve the syntax errors and fix the code to help the
+        character navigate through the jungle. Press the "R" key to start
+        running and avoid colliding with obstacles. Use the arrow keys to
+        control the character's movement.
+      </p>
       <button id="start-button">Start Game</button>
     </div>
 
@@ -22,6 +27,18 @@
       <h1>Congratulations!</h1>
       <p>Your Final Score: <span id="final-score">0</span></p>
       <button id="play-again-button">Play Again</button>
+    </div>
+
+    <!-- Syntax Error Modal -->
+    <div id="syntax-error-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Syntax Error</h2>
+        <p>Fix the syntax error to continue:</p>
+        <textarea id="code-input" placeholder="Enter your code here"></textarea>
+        <button id="submit-button">Submit</button>
+        <p id="error-message"></p>
+      </div>
     </div>
 
     <script src="script.js"></script>

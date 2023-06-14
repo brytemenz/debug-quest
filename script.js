@@ -1,239 +1,265 @@
-document.addEventListener("DOMContentLoaded", function () {
-  // Get the canvas element from the HTML file
-  const canvas = document.getElementById("game-canvas");
-  const ctx = canvas.getContext("2d");
+const splashScreen = document.getElementById("splash-screen");
+const startButton = document.getElementById("start-button");
+const instructionsButton = document.getElementById("instructions-button");
+const instructionsScreen = document.getElementById("instructions-screen");
+const gameContainer = document.getElementById("game-container");
+const endScreen = document.getElementById("end-screen");
+const endMessage = document.getElementById("end-message");
+const scoreDisplay = document.getElementById("score-display");
+const restartButton = document.getElementById("restart-button");
 
-  // Define the background image variables
-  const backgroundImage1 = new Image();
-  backgroundImage1.src = "asset/imgs/forest.jpg";
-  const backgroundImage2 = new Image();
-  backgroundImage2.src = "asset/imgs/forest.jpg";
+startButton.addEventListener("click", startGame);
+instructionsButton.addEventListener("click", showInstructions);
+restartButton.addEventListener("click", restartGame);
 
-  // Define the character image variables
-  const characterImage = new Image();
-  characterImage.src = "asset/imgs/run3.svg";
+function startGame() {
+  splashScreen.style.display = "none";
+  instructionsScreen.style.display = "none";
+  gameContainer.style.display = "block";
+  resetGame();
+}
 
-  // Define the obstacle image variable
-  const obstacleImage = new Image();
-  obstacleImage.src = "asset/imgs/obstacle.svg";
+function showInstructions() {
+  splashScreen.style.display = "none";
+  instructionsScreen.style.display = "block";
+}
 
-  let currentBackgroundImage = backgroundImage1;
+function restartGame() {
+  endScreen.style.display = "none";
+  gameContainer.style.display = "block";
+  resetGame();
+}
 
-  // Character position and movement variables
-  let characterFrameWidth = 100;
-  let characterFrameHeight = 500;
-  let characterFrameIndex = 0;
-  let characterSpeedX = 2;
-  let characterIsRunning = true;
+function gameOver() {
+  gameContainer.style.display = "none";
+  endScreen.style.display = "block";
+  endMessage.textContent = "Game Over";
+  scoreDisplay.textContent = "Score: " + score;
+}
 
-  // Calculate the initial X position to center the character horizontally
-  let characterX = 0;
+function congratulations() {
+  gameContainer.style.display = "none";
+  endScreen.style.display = "block";
+  endMessage.textContent = "Congratulations!";
+  scoreDisplay.textContent = "Score: " + score;
+}
+const canvas = document.getElementById("game-canvas");
+const context = canvas.getContext("2d");
 
-  // Character Y position
-  let characterY = canvas.height / 2 - characterFrameHeight / 15;
-  // Obstacle position and size variables
-  let obstacleY = canvas.height / 2 - 50;
-  let obstacleWidth = 100;
-  let obstacleHeight = 100;
-  let obstacleSpeedX = 3;
+// Resize the canvas to match the window dimensions
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-  // Frame counter variables
-  let frameCounter = 0;
-  const frameDelay = 10;
+const player = {
+  x: 50,
+  y: canvas.height - 50,
+  width: 50,
+  height: 50,
+  speed: 3,
+  isJumping: false,
+  isFalling: false,
+  jumpHeight: 100,
+};
 
-  // Syntax error modal variables
-  const syntaxErrorModal = document.getElementById("syntax-error-modal");
-  const codeInput = document.getElementById("code-input");
-  const submitButton = document.getElementById("submit-button");
-  const errorMessage = document.getElementById("error-message");
-  const questionContainer = document.getElementById("question-container");
+const obstacles = [
+  { x: 400, y: canvas.height - 50, width: 50, height: 50 },
+  { x: 800, y: canvas.height - 50, width: 50, height: 50 },
+  { x: 1200, y: canvas.height - 50, width: 50, height: 50 },
+  { x: 1600, y: canvas.height - 50, width: 50, height: 50 },
+  { x: 2000, y: canvas.height - 50, width: 50, height: 50 },
+];
 
-  // Function to draw the game background
-  function drawBackground() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-    ctx.drawImage(currentBackgroundImage, 0, 0, canvas.width, canvas.height);
-    ctx.drawImage(
-      currentBackgroundImage,
-      canvas.width,
-      0,
-      canvas.width,
-      canvas.height
-    );
+const puzzles = [
+  {
+    question: "Write a function to reverse a string.",
+    solution: "2",
+  },
+  {
+    question: "Write a function to find the maximum element in an array.",
+    solution: "2",
+  },
+  {
+    question: "Write a function to check if a number is prime.",
+    solution: "2",
+  },
+  {
+    question: "Write a function to remove duplicates from an array.",
+    solution: "2",
+  },
+  {
+    question: "Write a function to count the number of vowels in a string.",
+    solution: "2",
+  },
+];
+
+const modal = document.getElementById("puzzle-modal");
+const closeButton = document.querySelector(".close");
+const runButton = document.getElementById("run-button");
+const codePuzzle = document.getElementById("code-puzzle");
+const codeEditor = document.getElementById("code-editor");
+
+const outputDiv = document.getElementById("output");
+const triesRemaining = document.getElementById("tries-remaining");
+const scoreElement = document.getElementById("score");
+
+let isRunning = true;
+let chances = 3;
+let currentObstacleIndex = 0;
+let score = 0;
+
+const playerImg = new Image();
+playerImg.src = "/asset/imgs/run/skeleton-run_18.png";
+
+const obstacleImg = new Image();
+obstacleImg.src = "/asset/imgs/obst.png";
+
+const forestImg = new Image();
+forestImg.src = "/asset/imgs/forest.jpg";
+
+let forestX = 0;
+
+function drawPlayer() {
+  context.drawImage(playerImg, player.x, player.y, player.width, player.height);
+}
+
+function drawObstacle() {
+  const obstacle = obstacles[currentObstacleIndex];
+  context.drawImage(
+    obstacleImg,
+    obstacle.x,
+    obstacle.y,
+    obstacle.width,
+    obstacle.height
+  );
+}
+
+function clearCanvas() {
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.drawImage(forestImg, forestX, 0, canvas.width, canvas.height);
+  context.drawImage(
+    forestImg,
+    forestX + canvas.width,
+    0,
+    canvas.width,
+    canvas.height
+  );
+}
+
+function checkCollision() {
+  const obstacle = obstacles[currentObstacleIndex];
+  if (
+    player.x < obstacle.x + obstacle.width &&
+    player.x + player.width > obstacle.x &&
+    player.y < obstacle.y + obstacle.height &&
+    player.y + player.height > obstacle.y
+  ) {
+    return true;
   }
+  return false;
+}
 
-  // Function to draw the character on the canvas
-  function drawCharacter() {
-    ctx.drawImage(
-      characterImage,
-      characterFrameIndex * characterFrameWidth,
-      0,
-      characterFrameWidth,
-      characterFrameHeight,
-      characterX,
-      characterY,
-      characterFrameWidth,
-      characterFrameHeight
-    );
-  }
+function openModal() {
+  modal.style.display = "flex";
+  codePuzzle.textContent = puzzles[currentObstacleIndex].question;
+  // codeEditor.value = "bright";
+  outputDiv.textContent = "";
+  triesRemaining.textContent = `Tries Remaining: ${chances}`;
 
-  // Function to draw the obstacle on the canvas
-  function drawObstacle() {
-    ctx.drawImage(
-      obstacleImage,
-      obstacleX,
-      obstacleY,
-      obstacleWidth,
-      obstacleHeight
-    );
-  }
+  // Center the modal on the screen
+  modal.style.left = "50%";
+  modal.style.top = "50%";
+  modal.style.transform = "translate(-50%, -50%)";
+}
 
-  // Function to clear the canvas
-  function clearCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
+function closeModal() {
+  modal.style.display = "none";
+  isRunning = true;
+}
 
-  // Function to update the game state
-  function updateGame() {
-    clearCanvas();
-    drawBackground();
-    drawCharacter();
-    drawObstacle();
+function validatePuzzle() {
+  const answer = codeEditor.value.trim();
+  if (answer === puzzles[currentObstacleIndex].solution) {
+    closeModal();
+    isRunning = true;
+    currentObstacleIndex++;
+    score += 5; // Increment the score by 5 when a puzzle is solved correctly
+    scoreDisplay.textContent = "Score: " + score;
 
-    // Update character position based on running flag
-    if (characterIsRunning) {
-      // Update the frame counter
-      frameCounter++;
-
-      // Delay the frame update based on the frame counter
-      if (frameCounter % frameDelay === 0) {
-        characterFrameIndex = (characterFrameIndex + 1) % 12;
-      }
-
-      // Update character position
-      characterX += characterSpeedX;
-
-      // Check if character is outside the canvas boundaries
-      if (characterX > canvas.width) {
-        // Switch to the new background image
-        currentBackgroundImage = backgroundImage2;
-
-        // Reset character position to the initial X position
-        characterX = 0;
-
-        // Adjust the character's Y position for the new background
-        characterY = canvas.height / 2 - characterFrameHeight / 15 - 50;
-      }
-    }
-
-    // Update obstacle position
-    obstacleX -= obstacleSpeedX;
-
-    // Check collision between character and obstacle
-    if (
-      characterX < obstacleX + obstacleWidth &&
-      characterX + characterFrameWidth > obstacleX &&
-      characterY < obstacleY + obstacleHeight &&
-      characterY + characterFrameHeight > obstacleY
-    ) {
-      // Collision occurred, handle collision logic here (e.g., game over, score update, etc.)
-      console.log("Collision!");
-
-      // Stop the character from running
-      characterIsRunning = false;
-
-      // Display the syntax error modal
-      syntaxErrorModal.style.display = "block";
-
-      // Generate and display a random question
-      generateQuestion();
-    }
-
-    // Check if the background has panned completely
-    if (
-      currentBackgroundImage === backgroundImage2 &&
-      obstacleX + obstacleWidth <= 0
-    ) {
-      // Switch back to the original background image
-      currentBackgroundImage = backgroundImage1;
-
-      // Reset obstacle position
-      obstacleX = canvas.width + 200;
-    }
-
-    // Schedule the next game update
-    requestAnimationFrame(updateGame);
-  }
-
-  // Event listener for keydown event to start running
-  document.addEventListener("keydown", function (event) {
-    if (event.code === "KeyR" && !characterIsRunning) {
-      characterIsRunning = true;
-      characterFrameIndex = 0; // Reset the frame index when running starts
-    }
-  });
-
-  // Event listener for keyup event to stop running
-  document.addEventListener("keyup", function (event) {
-    if (event.code === "KeyR" && characterIsRunning) {
-      characterIsRunning = false;
-    }
-  });
-
-  // Event listener for start button click to start the game
-  const startButton = document.getElementById("start-button");
-  startButton.addEventListener("click", function () {
-    document.getElementById("welcome-screen").style.display = "none";
-    document.getElementById("game-screen").style.display = "block";
-    updateGame();
-  });
-
-  // Event listener for play again button click to restart the game
-  const playAgainButton = document.getElementById("play-again-button");
-  playAgainButton.addEventListener("click", function () {
-    document.getElementById("end-screen").style.display = "none";
-    document.getElementById("game-screen").style.display = "block";
-    characterIsRunning = true;
-    characterFrameIndex = 0;
-    characterX = 0;
-    obstacleX = canvas.width + 200;
-    updateGame();
-  });
-
-  // Event listener for closing the syntax error modal
-  const closeButton = document.getElementById("close-button");
-  closeButton.addEventListener("click", function () {
-    syntaxErrorModal.style.display = "none";
-  });
-
-  // Function to generate and display a random question
-  function generateQuestion() {
-    const questions = [
-      "What is the capital of France?",
-      "Who painted the Mona Lisa?",
-      "What year did World War II end?",
-    ];
-
-    // Generate a random index to select a question from the array
-    const randomIndex = Math.floor(Math.random() * questions.length);
-
-    // Get the randomly selected question
-    const question = questions[randomIndex];
-
-    // Display the question in the modal
-    questionContainer.textContent = question;
-  }
-
-  // Event listener for submitting the code in the syntax error modal
-  submitButton.addEventListener("click", function () {
-    const code = codeInput.value;
-
-    if (code.toLowerCase() === "correct") {
-      // Code is correct, close the syntax error modal and resume the game
-      syntaxErrorModal.style.display = "none";
-      characterIsRunning = true;
+    if (currentObstacleIndex >= obstacles.length) {
+      congratulations();
     } else {
-      // Code is incorrect, display an error message
-      errorMessage.textContent = "Incorrect code. Please try again.";
+      alert(
+        "Congratulations! You have solved the puzzle. Proceed to the next obstacle."
+      );
+      // isRunning = false;
     }
-  });
+  } else {
+    chances--;
+    triesRemaining.textContent = `Tries Remaining: ${chances}`;
+    if (chances > 0) {
+      alert(`Incorrect solution! You have ${chances} chance(s) remaining.`);
+    } else {
+      gameOver();
+    }
+  }
+}
+
+function resetGame() {
+  player.x = 50;
+  player.y = canvas.height - 50;
+  isRunning = true;
+  chances = 3;
+  currentObstacleIndex = 0;
+  triesRemaining.textContent = `Tries Remaining: ${chances}`;
+  score = 0;
+  scoreElement.textContent = score;
+}
+
+closeButton.addEventListener("click", closeModal);
+runButton.addEventListener("click", validatePuzzle);
+
+modal.addEventListener("click", function (event) {
+  event.stopPropagation();
 });
+
+function update() {
+  clearCanvas();
+
+  if (player.isJumping) {
+    player.y -= player.speed;
+    if (player.y <= player.jumpHeight) {
+      player.isJumping = false;
+      player.isFalling = true;
+    }
+  } else if (player.isFalling) {
+    player.y += player.speed;
+    if (player.y >= canvas.height - player.height) {
+      player.isFalling = false;
+    }
+  }
+
+  if (checkCollision()) {
+    openModal();
+    isRunning = false;
+  }
+
+  if (isRunning) {
+    player.x += player.speed;
+
+    // Pan the background
+    forestX -= 1;
+    if (forestX <= -canvas.width) {
+      forestX = 0;
+    }
+  }
+
+  drawPlayer();
+  drawObstacle();
+
+  requestAnimationFrame(update);
+}
+
+update();
+
+// Enable typing in the code-editor textarea
+codeEditor.disabled = false;

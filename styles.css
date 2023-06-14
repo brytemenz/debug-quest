@@ -1,125 +1,266 @@
+
+
+
+
 body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #e5f7fd;
-  }
-
-  h1 {
-    font-size: 32px;
-    text-align: center;
-    color: #155799;
-    margin-bottom: 20px;
-  }
-
-  p {
-    font-size: 18px;
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px;
-  }
-
-  button {
-    font-size: 20px;
-    padding: 10px 20px;
-    background-color: #155799;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  button:hover {
-    background-color: #0d3b5c;
-  }
-
-  /* Welcome Screen */
-  #welcome-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-
-  /* Game Screen */
-  #game-screen {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-  }
-
-  #game-canvas {
-    /* background: url('/asset/imgs/forest.jpg') no-repeat;  */
-    background-size: cover;
-    border: red solid 1px;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* End Screen */
-  #end-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-
- 
-/* Syntax Error Modal */
-.modal {
-  display: none; /* Hide the modal by default */
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
+  background-image: url("https://cdna.artstation.com/p/assets/images/images/018/394/576/medium/cliff-chen-01.jpg?1559208981");
+  background-repeat: repeat;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
 }
 
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
+#game-container {
+  width: 800px;
+  margin: 0 auto;
   padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  max-width: 500px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  text-align: center;
 }
 
-.modal h2 {
-  margin-top: 0;
-}
-
-.modal p {
+h2 {
+  font-size: 24px;
   margin-bottom: 20px;
 }
 
-.modal textarea {
-  width: 100%;
-  height: 150px;
-  resize: vertical;
+#player {
+  width: 50px;
+  height: 50px;
+  background-color: blue;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-.modal button {
-  display: block;
-  margin: 0 auto;
+button#obstacle {
+  margin-top: 50px;
+  padding: 10px 20px;
+  font-size: 16px;
 }
 
-.modal .close {
+.modal-content {
+  background-color: #afaa;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%;
+  border-radius: 1rem;
+}
+
+.close {
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
+  background: radial-gradient(red, transparent);
 }
 
-.modal .close:hover,
-.modal .close:focus {
+.close:hover,
+.close:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
 }
+
+#code-puzzle {
+  font-family: monospace;
+  white-space: pre-wrap;
+  padding: 10px;
+  background-color: gray;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  border-radius: 4rem;
+}
+
+#code-editor {
+  width: 100%;
+  height: 100px;
+  padding: 5px;
+  color: #f5f5f5;
+  background-color: rgb(38, 39, 39);
+  margin-bottom: 10px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  border: none;
+  border-radius: 1rem;
+  padding-top: 17px;
+  padding-left: 8px;
+}
+
+#run-button {
+  padding: 8px 16px;
+  font-size: 16px;
+  background: white;
+  border-radius: 4rem;
+  color: green;
+}
+
+#output {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+#tries-remaining {
+  color: red;
+}
+
+#game-canvas {
+  margin: 0 auto;
+  display: block;
+  border: 1px solid #ccc;
+}
+
+#editor-container {
+  margin-top: 10px;
+}
+
+#code-editor {
+  width: 100%;
+  height: 200px;
+  padding: 5px;
+  font-family: monospace;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#game-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#body1 {
+  margin: 2rem;
+  align-items: center;
+  align-content: center;
+  background-color: gray;
+}
+
+#start-button,
+#instructions-button {
+  border-radius: 1rem;
+  background-color: rgb(44, 152, 44);
+  color: white;
+  width: 10%;
+  padding: 0.4rem;
+}
+
+#start-button:hover,
+#instructions-button:hover {
+  cursor: pointer;
+}
+
+.container {
+  text-align: center;
+  border: green;
+  margin: 2rem;
+}
+#gamename {
+  font-size: 36px;
+  font-weight: bold;
+  color: yellow;
+  background-color: green;
+  padding: 10px;
+  border: 5px solid green;
+  border-radius: 10px;
+  text-align: center;
+  
+  font-family: 'Kablammo', sans-serif;
+  }
+
+#splash-screen {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 200px auto;
+  max-width: 400px;
+}
+
+#splash-screen h1 {
+  font-size: 36px;
+  font-weight: bold;
+  color: yellow;
+  background-color: green;
+  padding: 10px;
+  border: 5px solid green;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+#splash-screen p {
+  font-size: 18px;
+  color: rgb(85, 4, 4);
+  margin-bottom: 30px;
+}
+
+#start-button,
+#instructions-button {
+  border-radius: 1rem;
+  background-color: rgb(44, 152, 44);
+  color: white;
+  width: 150px;
+  padding: 10px;
+  font-size: 16px;
+  margin: 10px;
+}
+
+#start-button:hover,
+#instructions-button:hover {
+  cursor: pointer;
+}
+#end-screen {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 200px auto;
+  max-width: 400px;
+}
+
+#end-screen h1 {
+  font-size: 36px;
+  font-weight: bold;
+  color: yellow;
+  background-color: green;
+  padding: 10px;
+  border: 5px solid green;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+#end-screen p {
+  font-size: 18px;
+  color: rgb(126, 12, 12);
+  margin-bottom: 30px;
+}
+
+#score-display {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bolder;
+}
+
+#restart-button {
+  border-radius: 1rem;
+  background-color: rgb(44, 152, 44);
+  color: white;
+  width: 150px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+#restart-button:hover {
+  cursor: pointer;
+}
+
+

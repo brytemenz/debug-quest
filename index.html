@@ -1,43 +1,50 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Debug Quest: Jungle Adventures</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kablammo&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body>
-    <!-- Welcome Screen -->
-    <div id="welcome-screen">
-      <h1>Welcome to Debug Quest: Jungle Adventures</h1>
-      <p>
-        Instructions: Solve the syntax errors and fix the code to help the
-        character navigate through the jungle. Press the "R" key to start
-        running and avoid colliding with obstacles. Use the arrow keys to
-        control the character's movement.
-      </p>
-      <button id="start-button">Start Game</button>
-    </div>
+  <body id="body1">
+    <div class="container">
+      <div id="splash-screen">
+        <h1 id="gamename">Debug Quest - Jungle Adventures</h1>
+        <p>Please follow the instructions</p>
+        <button id="start-button">Start</button>
+        <button id="instructions-button">Rules</button>
+      </div>
 
-    <!-- Game Screen -->
-    <div id="game-screen">
-      <canvas id="game-canvas" width="800" height="600"></canvas>
-    </div>
+      <div id="instructions-screen">
+        <h1>Instructions</h1>
+        <p>Click Start to begin the game</p>
+        <p>You need to solve the coding syntax before continung</p>
+        <p>Click Start to begin the game</p>
+      </div>
 
-    <!-- End Screen -->
-    <div id="end-screen">
-      <h1>Congratulations!</h1>
-      <p>Your Final Score: <span id="final-score">0</span></p>
-      <button id="play-again-button">Play Again</button>
-    </div>
+      <div id="game-container" style="display: none">
+        <h2>Debug Quest: Jungle Adventures</h2>
+        <canvas id="game-canvas" width="800" height="400"></canvas>
+        <button id="obstacle">Obstacle</button>
+        <div id="puzzle-modal" class="modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <pre id="code-puzzle"></pre>
+            <div id="editor-container">
+              <textarea id="code-editor"></textarea>
+            </div>
+            <button id="run-button">Run Code</button>
+            <div id="output"></div>
+            <div id="tries-remaining"></div>
+          </div>
+        </div>
+      </div>
 
-    <!-- Syntax Error Modal -->
-    <div id="syntax-error-modal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Syntax Error</h2>
-        <p>Fix the syntax error to continue:</p>
-        <textarea id="code-input" placeholder="Enter your code here"></textarea>
-        <button id="submit-button">Submit</button>
-        <p id="error-message"></p>
+      <div id="end-screen" style="display: none">
+        <h1 id="end-message"></h1>
+        <p id="score-display"></p>
+        <button id="restart-button">Restart</button>
       </div>
     </div>
 

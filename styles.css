@@ -1,7 +1,3 @@
-
-
-
-
 body {
   background-image: url("https://cdna.artstation.com/p/assets/images/images/018/394/576/medium/cliff-chen-01.jpg?1559208981");
   background-repeat: repeat;
@@ -76,17 +72,9 @@ button#obstacle {
 
 #code-editor {
   width: 100%;
-  height: 100px;
+  height: 200px;
   padding: 5px;
-  color: #f5f5f5;
-  background-color: rgb(38, 39, 39);
-  margin-bottom: 10px;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 14px;
-  border: none;
-  border-radius: 1rem;
-  padding-top: 17px;
-  padding-left: 8px;
+  font-family: monospace;
 }
 
 #run-button {
@@ -110,6 +98,11 @@ button#obstacle {
   margin: 0 auto;
   display: block;
   border: 1px solid #ccc;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 #editor-container {
@@ -120,6 +113,9 @@ button#obstacle {
   width: 100%;
   height: 200px;
   padding: 5px;
+  color: white;
+  font-weight: bolder;
+  background-color: rgb(47, 47, 47);
   font-family: monospace;
 }
 
@@ -130,77 +126,11 @@ body {
   overflow: hidden;
 }
 
-#game-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
 #body1 {
   margin: 2rem;
   align-items: center;
   align-content: center;
   background-color: gray;
-}
-
-#start-button,
-#instructions-button {
-  border-radius: 1rem;
-  background-color: rgb(44, 152, 44);
-  color: white;
-  width: 10%;
-  padding: 0.4rem;
-}
-
-#start-button:hover,
-#instructions-button:hover {
-  cursor: pointer;
-}
-
-.container {
-  text-align: center;
-  border: green;
-  margin: 2rem;
-}
-#gamename {
-  font-size: 36px;
-  font-weight: bold;
-  color: yellow;
-  background-color: green;
-  padding: 10px;
-  border: 5px solid green;
-  border-radius: 10px;
-  text-align: center;
-  
-  font-family: 'Kablammo', sans-serif;
-  }
-
-#splash-screen {
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  margin: 200px auto;
-  max-width: 400px;
-}
-
-#splash-screen h1 {
-  font-size: 36px;
-  font-weight: bold;
-  color: yellow;
-  background-color: green;
-  padding: 10px;
-  border: 5px solid green;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-#splash-screen p {
-  font-size: 18px;
-  color: rgb(85, 4, 4);
-  margin-bottom: 30px;
 }
 
 #start-button,
@@ -218,6 +148,26 @@ body {
 #instructions-button:hover {
   cursor: pointer;
 }
+
+.container {
+  text-align: center;
+  border: green;
+  margin: 2rem;
+}
+
+#gamename {
+  font-size: 36px;
+  font-weight: bold;
+  color: yellow;
+  background-color: green;
+  padding: 10px;
+  border: 5px solid green;
+  border-radius: 10px;
+  text-align: center;
+  font-family: 'Kablammo', sans-serif;
+}
+
+#splash-screen,
 #end-screen {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 20px;
@@ -227,6 +177,7 @@ body {
   max-width: 400px;
 }
 
+#splash-screen h1,
 #end-screen h1 {
   font-size: 36px;
   font-weight: bold;
@@ -238,9 +189,10 @@ body {
   margin-bottom: 20px;
 }
 
+#splash-screen p,
 #end-screen p {
   font-size: 18px;
-  color: rgb(126, 12, 12);
+  color: rgb(85, 4, 4);
   margin-bottom: 30px;
 }
 
@@ -262,5 +214,3 @@ body {
 #restart-button:hover {
   cursor: pointer;
 }
-
-

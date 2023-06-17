@@ -43,6 +43,7 @@ function congratulations() {
   endMessage.textContent = "Congratulations!";
   scoreDisplay.textContent = "Score: " + score;
 }
+
 const canvas = document.getElementById("game-canvas");
 const context = canvas.getContext("2d");
 
@@ -50,11 +51,16 @@ const context = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+const playerSprite = new Image();
+playerSprite.src = "/asset/imgs/brightrun.png";
+
 const player = {
   x: 50,
   y: canvas.height - 50,
-  width: 50,
-  height: 50,
+  width: 96,
+  height: 100,
+  frameX: 8,
+  frameY: 8,
   speed: 3,
   isJumping: false,
   isFalling: false,
@@ -63,32 +69,41 @@ const player = {
 
 const obstacles = [
   { x: 400, y: canvas.height - 50, width: 50, height: 50 },
-  { x: 800, y: canvas.height - 50, width: 50, height: 50 },
-  { x: 1200, y: canvas.height - 50, width: 50, height: 50 },
-  { x: 1600, y: canvas.height - 50, width: 50, height: 50 },
-  { x: 2000, y: canvas.height - 50, width: 50, height: 50 },
+  { x: 600, y: canvas.height - 50, width: 100, height: 100 },
+  { x: 800, y: canvas.height - 50, width: 100, height: 100 },
+  { x: 1000, y: canvas.height - 50, width: 150, height: 150 },
+  { x: 1200, y: canvas.height - 50, width: 250, height: 250 },
 ];
 
 const puzzles = [
   {
-    question: "Write a function to reverse a string.",
-    solution: "2",
+    question: `function greet(name) {
+      console.log("Hello, " + name + "!");
+    }`,
+    solution: ")",
   },
   {
-    question: "Write a function to find the maximum element in an array.",
-    solution: "2",
+    question: `let x = 5
+    let y = 10
+    let sum = x + y
+    console.log(The sum is: " + sum)`,
+    solution: `"`,
   },
   {
-    question: "Write a function to check if a number is prime.",
-    solution: "2",
+    question: `fucntion multiply(a, b) {
+      return a * b;
+    }`,
+    solution: "function",
   },
   {
-    question: "Write a function to remove duplicates from an array.",
-    solution: "2",
+    question: `let person = { name: "John", age 30 };
+    console.log(person);`,
+    solution: ":",
   },
   {
-    question: "Write a function to count the number of vowels in a string.",
-    solution: "2",
+    question: `let message = "Hello, world!';
+    console.log(message);`,
+    solution: `"`,
   },
 ];
 
@@ -114,12 +129,18 @@ const obstacleImg = new Image();
 obstacleImg.src = "/asset/imgs/obst.png";
 
 const forestImg = new Image();
-forestImg.src = "/asset/imgs/forest.jpg";
+forestImg.src = "/asset/imgs/jungle.png";
 
 let forestX = 0;
 
 function drawPlayer() {
-  context.drawImage(playerImg, player.x, player.y, player.width, player.height);
+  context.drawImage(
+    playerSprite,
+    player.x,
+    player.y,
+    player.width,
+    player.height
+  );
 }
 
 function drawObstacle() {
@@ -205,8 +226,8 @@ function validatePuzzle() {
 }
 
 function resetGame() {
-  player.x = 50;
-  player.y = canvas.height - 50;
+  player.x = 200;
+  player.y = canvas.height - 500;
   isRunning = true;
   chances = 3;
   currentObstacleIndex = 0;
@@ -246,6 +267,8 @@ function update() {
   if (isRunning) {
     player.x += player.speed;
 
+    obstacles[currentObstacleIndex].y = player.y;
+
     // Pan the background
     forestX -= 1;
     if (forestX <= -canvas.width) {
@@ -261,5 +284,4 @@ function update() {
 
 update();
 
-// Enable typing in the code-editor textarea
 codeEditor.disabled = false;
